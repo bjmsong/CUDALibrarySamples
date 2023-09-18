@@ -86,9 +86,16 @@ int main(int argc, char *argv[]) {
     data_type *d_B = nullptr;
     data_type *d_C = nullptr;
 
-    cublasOperation_t transa = CUBLAS_OP_N;
+    cublasOperation_t transa = CUBLAS_OP_N;   // 不转置
     cublasOperation_t transb = CUBLAS_OP_N;
 
+    /*
+     *   A = | 1.0 | 3.0 |
+     *       | 2.0 | 4.0 |
+     *
+     *   B = | 5.0 | 7.0 |
+     *       | 6.0 | 8.0 |
+     */
     printf("A\n");
     print_matrix(m, k, A.data(), lda);
     printf("=====\n");
@@ -108,6 +115,7 @@ int main(int argc, char *argv[]) {
     CUDA_CHECK(cudaMalloc(reinterpret_cast<void **>(&d_B), sizeof(data_type) * B.size()));
     CUDA_CHECK(cudaMalloc(reinterpret_cast<void **>(&d_C), sizeof(data_type) * C.size()));
 
+    // A.data()指向的数据按照列主序排布成矩阵
     CUDA_CHECK(cudaMemcpyAsync(d_A, A.data(), sizeof(data_type) * A.size(), cudaMemcpyHostToDevice,
                                stream));
     CUDA_CHECK(cudaMemcpyAsync(d_B, B.data(), sizeof(data_type) * B.size(), cudaMemcpyHostToDevice,

@@ -36,6 +36,7 @@ set(ROUTINE amax)
 # ---[ Project specification.
 project(cublas_examples LANGUAGES C CXX CUDA)
 
+# https://cmake.org/cmake/help/latest/module/GNUInstallDirs.html
 include(GNUInstallDirs)
 
 # ##########################################

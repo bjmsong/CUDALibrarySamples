@@ -80,6 +80,7 @@ int main(int argc, char *argv[]) {
     /* step 1: create cublas handle, bind a stream */
     CUBLAS_CHECK(cublasCreate(&cublasH));
 
+    // cudaStreamNonBlocking: 允许CUDA操作与主机代码和其他CUDA操作并行进行
     CUDA_CHECK(cudaStreamCreateWithFlags(&stream, cudaStreamNonBlocking));
     CUBLAS_CHECK(cublasSetStream(cublasH, stream));
 
